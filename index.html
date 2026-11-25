@@ -5,18 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#15151e">
-<title>F1 Dashboard</title>
+<title>Formula 1 Dashboard</title>
 
 <style>
 :root {
     --bg: #15151e;
-    --panel: #1f1f27;
-    --panel2: #292932;
+    --panel: #202029;
     --line: #383841;
     --text: #f5f5f5;
     --muted: #a7a7b1;
     --red: #e10600;
-    --green: #00d084;
     --yellow: #f5c542;
 }
 
@@ -29,79 +27,49 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .app {
-    max-width: 1100px;
-    margin: 0 auto;
+    width: 100%;
     min-height: 100vh;
 }
 
 .topline {
-    height: 5px;
+    height: 3px;
     background: var(--red);
 }
 
-header {
-    padding: 20px 24px 16px;
-    background: linear-gradient(115deg, #20202a, #15151e);
-    border-bottom: 1px solid var(--line);
-}
+/* HEADER */
 
-.brandrow {
+header {
+    padding: 9px 13px;
+    background: #191920;
+    border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.f1mark {
+.logo {
+    font-size: 21px;
     font-weight: 1000;
     font-style: italic;
-    font-size: 32px;
-    letter-spacing: -3px;
-}
-
-.brand small {
-    display: block;
-    color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 4px;
+    letter-spacing: -2px;
 }
 
 .season {
-    background: #30303a;
-    border: 1px solid #44444e;
-    border-radius: 5px;
-    padding: 7px 11px;
-    font-weight: 800;
-    font-size: 12px;
-}
-
-h1 {
-    font-size: clamp(22px, 4vw, 31px);
-    margin: 17px 0 4px;
-    font-weight: 900;
-}
-
-.subtitle {
+    font-size: 10px;
     color: var(--muted);
-    font-size: 12px;
+    font-weight: 800;
 }
+
+/* NAVIGATION */
 
 .tabs {
     display: flex;
-    gap: 7px;
-    padding: 12px 20px;
+    gap: 3px;
+    padding: 7px 9px;
     background: #191922;
     border-bottom: 1px solid var(--line);
     position: sticky;
@@ -110,32 +78,29 @@ h1 {
 }
 
 .tab {
+    flex: 1;
     border: 0;
     background: transparent;
     color: #aaaab4;
-    padding: 11px 16px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: 9px 4px;
+    border-radius: 3px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: .45px;
     text-transform: uppercase;
     cursor: pointer;
-    border-bottom: 3px solid transparent;
-}
-
-.tab:hover {
-    color: white;
-    background: #292932;
+    border-bottom: 2px solid transparent;
 }
 
 .tab.active {
-    background: #2b2022;
+    background: #302023;
     color: white;
     border-bottom-color: var(--red);
 }
 
+/* CONTENT */
+
 main {
-    padding: 20px 22px 26px;
+    padding: 10px;
 }
 
 .view {
@@ -148,93 +113,101 @@ main {
 
 .section-head {
     display: flex;
-    align-items: flex-end;
     justify-content: space-between;
-    gap: 12px;
-    margin: 2px 0 15px;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 9px;
 }
 
 .section-head h2 {
-    font-size: 18px;
+    font-size: 15px;
     margin: 0;
     font-weight: 900;
     text-transform: uppercase;
 }
 
-.kicker {
-    font-size: 10px;
-    color: #ff302a;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-}
-
 .meta {
     color: var(--muted);
-    font-size: 11px;
+    font-size: 10px;
+    margin-top: 3px;
 }
+
+.refresh {
+    border: 1px solid #45454f;
+    background: #292932;
+    color: #ddd;
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* RACE CARD */
 
 .race-card {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 15px;
 }
 
 .race-banner {
-    padding: 15px 17px;
+    padding: 9px 11px;
     background: linear-gradient(100deg, #3a1719, #24242d 70%);
-    border-left: 5px solid var(--red);
+    border-left: 3px solid var(--red);
 }
 
 .race-name {
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 900;
     text-transform: uppercase;
 }
 
 .race-detail {
     color: #c5c5ce;
-    font-size: 11px;
-    margin-top: 5px;
+    font-size: 10px;
+    margin-top: 3px;
 }
 
+/* TABLES */
+
 .table-wrap {
+    width: 100%;
     overflow-x: auto;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
-    min-width: 470px;
+    min-width: 0;
 }
 
 th {
     text-align: left;
-    color: #9c9ca7;
-    font-size: 10px;
+    color: #9999a5;
+    font-size: 9px;
     text-transform: uppercase;
-    letter-spacing: .8px;
-    padding: 11px 13px;
-    background: #22222b;
+    padding: 7px 8px;
+    background: #24242d;
+    white-space: nowrap;
 }
 
 td {
-    padding: 11px 13px;
+    padding: 7px 8px;
     border-top: 1px solid #34343d;
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1.2;
 }
 
 tbody tr:hover {
-    background: #282832;
+    background: #292932;
 }
 
 .pos {
     font-weight: 900;
-    font-size: 14px;
-    width: 42px;
+    font-size: 12px;
+    width: 30px;
 }
 
 .pos.first {
@@ -247,8 +220,8 @@ tbody tr:hover {
 
 .team {
     color: var(--muted);
-    font-size: 11px;
-    margin-top: 3px;
+    font-size: 10px;
+    margin-top: 2px;
 }
 
 .points {
@@ -260,88 +233,53 @@ tbody tr:hover {
 .pill {
     display: inline-block;
     border-radius: 3px;
-    padding: 3px 6px;
+    padding: 2px 4px;
     background: #33333d;
     color: #ddd;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
 }
 
-.standings-table .pos {
-    width: 52px;
-}
-
-.teamline {
-    display: inline-block;
-    width: 3px;
-    height: 28px;
-    border-radius: 2px;
-    margin-right: 8px;
-    vertical-align: middle;
-    background: var(--red);
-}
+/* TEAM WM */
 
 .team-name {
     font-weight: 800;
 }
 
 .team-points {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 900;
     text-align: right;
+    white-space: nowrap;
 }
 
-.bar {
-    height: 5px;
-    background: #393943;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 6px;
-}
+/* LOADING / ERRORS */
 
-.bar span {
-    display: block;
-    height: 100%;
-    background: var(--red);
-    border-radius: 10px;
-}
-
-.loading, .empty, .error {
-    padding: 26px;
+.loading,
+.empty,
+.error {
+    padding: 18px;
     text-align: center;
     color: var(--muted);
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .error {
     color: #ff9b97;
 }
 
-.refresh {
-    border: 1px solid #45454f;
-    background: #292932;
-    color: #ddd;
-    border-radius: 4px;
-    padding: 7px 10px;
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.refresh:hover {
-    border-color: var(--red);
-}
+/* FOOTER */
 
 footer {
     border-top: 1px solid var(--line);
-    padding: 13px 22px;
+    padding: 8px 11px;
     color: #858590;
-    font-size: 10px;
+    font-size: 9px;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
@@ -350,34 +288,46 @@ footer a {
     text-decoration: none;
 }
 
-@media(max-width: 600px) {
+/* SMALL WIDGET */
+
+@media(max-width: 450px) {
+
+    main {
+        padding: 7px;
+    }
+
     header {
-        padding: 16px;
+        padding: 7px 10px;
     }
 
     .tabs {
-        padding: 9px;
-        gap: 3px;
+        padding: 5px;
     }
 
     .tab {
-        flex: 1;
-        padding: 10px 5px;
+        font-size: 10px;
+        padding: 8px 2px;
+    }
+
+    .section-head h2 {
+        font-size: 13px;
+    }
+
+    th {
+        padding: 6px 5px;
+        font-size: 8px;
+    }
+
+    td {
+        padding: 6px 5px;
         font-size: 10px;
     }
 
-    main {
-        padding: 14px 10px 20px;
-    }
-
-    .section-head {
-        align-items: flex-start;
-    }
-
-    th, td {
-        padding: 10px 9px;
+    .team {
+        font-size: 9px;
     }
 }
+
 </style>
 </head>
 
@@ -388,28 +338,8 @@ footer a {
 <div class="topline"></div>
 
 <header>
-    <div class="brandrow">
-
-        <div class="brand">
-            <div class="f1mark">F1</div>
-
-            <div>
-                <strong>RACE CENTRE</strong>
-                <small>Results · Standings · Season</small>
-            </div>
-        </div>
-
-        <div class="season" id="seasonBadge">
-            SAISON —
-        </div>
-
-    </div>
-
-    <h1>FORMULA 1 DASHBOARD</h1>
-
-    <div class="subtitle">
-        Die wichtigsten Daten der Königsklasse.
-    </div>
+    <div class="logo">F1</div>
+    <div class="season" id="seasonBadge">SAISON —</div>
 </header>
 
 <nav class="tabs">
@@ -435,19 +365,14 @@ footer a {
 <section class="view active" id="results">
 
     <div class="section-head">
-
         <div>
-            <div class="kicker">Race results</div>
             <h2>Letztes Rennen</h2>
-            <div class="meta" id="raceMeta">
-                Lade Rennergebnisse ...
-            </div>
+            <div class="meta" id="raceMeta">Lade Ergebnisse ...</div>
         </div>
 
         <button class="refresh" id="refreshResults">
-            ↻ Aktualisieren
+            ↻
         </button>
-
     </div>
 
     <div id="raceContent" class="loading">
@@ -457,24 +382,21 @@ footer a {
 </section>
 
 
-<!-- FAHRER-WM -->
+<!-- FAHRER WM -->
 
 <section class="view" id="drivers">
 
     <div class="section-head">
-
         <div>
-            <div class="kicker">World championship</div>
-            <h2>Fahrer-Weltmeisterschaft</h2>
+            <h2>Fahrer-WM</h2>
             <div class="meta" id="driverMeta">
                 Aktueller Meisterschaftsstand
             </div>
         </div>
 
         <button class="refresh" id="refreshDrivers">
-            ↻ Aktualisieren
+            ↻
         </button>
-
     </div>
 
     <div id="driverContent" class="loading">
@@ -484,24 +406,21 @@ footer a {
 </section>
 
 
-<!-- TEAM-WM -->
+<!-- TEAM WM -->
 
 <section class="view" id="teams">
 
     <div class="section-head">
-
         <div>
-            <div class="kicker">World championship</div>
-            <h2>Konstrukteurs-Weltmeisterschaft</h2>
+            <h2>Team-WM</h2>
             <div class="meta" id="teamMeta">
                 Aktueller Meisterschaftsstand
             </div>
         </div>
 
         <button class="refresh" id="refreshTeams">
-            ↻ Aktualisieren
+            ↻
         </button>
-
     </div>
 
     <div id="teamContent" class="loading">
@@ -513,18 +432,8 @@ footer a {
 </main>
 
 <footer>
-
-    <span id="updated">
-        Datenquelle: Jolpica F1 API
-    </span>
-
-    <span>
-        <a href="https://github.com/jolpica/jolpica-f1"
-           target="_blank" rel="noopener">
-            API / Datenquelle
-        </a>
-    </span>
-
+    <span id="updated">Jolpica F1 API</span>
+    <span>Formula 1 Dashboard</span>
 </footer>
 
 </div>
@@ -532,7 +441,6 @@ footer a {
 
 <script>
 
-// API
 const API = 'https://api.jolpi.ca/ergast/f1';
 const YEAR = 'current';
 
@@ -580,8 +488,7 @@ function showError(id, error) {
     $(id).className = 'error';
 
     $(id).textContent =
-        `Daten konnten nicht geladen werden. 
-        ${error.message || error}. Bitte später erneut versuchen.`;
+        `Daten konnten nicht geladen werden. ${error.message || error}`;
 
 }
 
@@ -597,17 +504,15 @@ function setSeason(data) {
 }
 
 
-// AKTUALISIERUNGSZEIT
+// AKTUALISIERUNG
 
 function setUpdated() {
 
     $('updated').textContent =
-        `Datenquelle: Jolpica F1 API · Stand: ${
-            new Date().toLocaleString('de-DE', {
-                dateStyle:'short',
-                timeStyle:'short'
-            })
-        }`;
+        `Aktualisiert: ${new Date().toLocaleTimeString('de-DE', {
+            hour:'2-digit',
+            minute:'2-digit'
+        })}`;
 
 }
 
@@ -620,7 +525,7 @@ function renderRace(race) {
 
         $('raceContent').className = 'empty';
         $('raceContent').textContent =
-            'Für diese Saison liegen noch keine Rennergebnisse vor.';
+            'Keine Rennergebnisse verfügbar.';
 
         return;
     }
@@ -632,7 +537,7 @@ function renderRace(race) {
         `Runde ${race.round} · ${
             new Date(race.date+'T12:00:00').toLocaleDateString(
                 'de-DE',
-                {day:'2-digit',month:'long',year:'numeric'}
+                {day:'2-digit',month:'short',year:'numeric'}
             )
         }`;
 
@@ -654,9 +559,6 @@ function renderRace(race) {
                 <div class="driver">
                     ${escapeHTML(driver.givenName)}
                     ${escapeHTML(driver.familyName)}
-                    <span style="color:#999">
-                        ${escapeHTML(driver.code || '')}
-                    </span>
                 </div>
 
                 <div class="team">
@@ -711,9 +613,7 @@ function renderRace(race) {
                             <th>Pos.</th>
                             <th>Fahrer / Team</th>
                             <th>Status</th>
-                            <th style="text-align:right">
-                                Punkte
-                            </th>
+                            <th style="text-align:right">Punkte</th>
                         </tr>
                     </thead>
 
@@ -737,8 +637,7 @@ function renderRace(race) {
 async function loadResults() {
 
     $('raceContent').className = 'loading';
-    $('raceContent').textContent =
-        'Rennergebnisse werden geladen ...';
+    $('raceContent').textContent = 'Lade Ergebnisse ...';
 
     try {
 
@@ -759,13 +658,12 @@ async function loadResults() {
 }
 
 
-// FAHRER-WM LADEN
+// FAHRER-WM
 
 async function loadDrivers() {
 
     $('driverContent').className = 'loading';
-    $('driverContent').textContent =
-        'Fahrerwertung wird geladen ...';
+    $('driverContent').textContent = 'Lade Fahrerwertung ...';
 
     try {
 
@@ -777,11 +675,11 @@ async function loadDrivers() {
         setSeason(data.StandingsTable);
 
         if (!list?.DriverStandings?.length) {
-            throw new Error('Noch keine Wertungsdaten vorhanden.');
+            throw new Error('Keine Wertungsdaten vorhanden.');
         }
 
         $('driverMeta').textContent =
-            `Stand nach Runde ${list.round || '—'} · ${list.season}`;
+            `Nach Runde ${list.round || '—'}`;
 
         const rows = list.DriverStandings.map((s,i) => {
 
@@ -803,10 +701,6 @@ async function loadDrivers() {
                     <div class="driver">
                         ${escapeHTML(d.givenName)}
                         ${escapeHTML(d.familyName)}
-
-                        <span style="color:#999">
-                            ${escapeHTML(d.code || '')}
-                        </span>
                     </div>
 
                     <div class="team">
@@ -817,7 +711,6 @@ async function loadDrivers() {
 
                 <td class="points">
                     ${number(s.wins)}
-                    <span class="meta">Siege</span>
                 </td>
 
                 <td class="points">
@@ -845,9 +738,7 @@ async function loadDrivers() {
                                 <th>Pos.</th>
                                 <th>Fahrer</th>
                                 <th>Siege</th>
-                                <th style="text-align:right">
-                                    Punkte
-                                </th>
+                                <th style="text-align:right">Punkte</th>
                             </tr>
                         </thead>
 
@@ -874,19 +765,16 @@ async function loadDrivers() {
 }
 
 
-// TEAM-WM LADEN
+// TEAM-WM
 
 async function loadTeams() {
 
     $('teamContent').className = 'loading';
-    $('teamContent').textContent =
-        'Teamwertung wird geladen ...';
+    $('teamContent').textContent = 'Lade Teamwertung ...';
 
     try {
 
-        const data = await api(
-            `${YEAR}/constructorstandings`
-        );
+        const data = await api(`${YEAR}/constructorstandings`);
 
         const list =
             data.StandingsTable?.StandingsLists?.[0];
@@ -894,29 +782,15 @@ async function loadTeams() {
         setSeason(data.StandingsTable);
 
         if (!list?.ConstructorStandings?.length) {
-            throw new Error('Noch keine Wertungsdaten vorhanden.');
+            throw new Error('Keine Wertungsdaten vorhanden.');
         }
 
         $('teamMeta').textContent =
-            `Stand nach Runde ${list.round || '—'} · ${list.season}`;
-
-        const max = Math.max(
-            ...list.ConstructorStandings.map(
-                s => Number(s.points) || 0
-            ),
-            1
-        );
+            `Nach Runde ${list.round || '—'}`;
 
         const rows = list.ConstructorStandings.map((s,i) => {
 
             const team = s.Constructor || {};
-
-            const width = Math.max(
-                2,
-                Math.round(
-                    (Number(s.points) || 0) / max * 100
-                )
-            );
 
             return `
 
@@ -928,31 +802,18 @@ async function loadTeams() {
 
                 <td>
 
-                    <span class="teamline"></span>
-
                     <span class="team-name">
                         ${escapeHTML(team.name || '—')}
                     </span>
-
-                    <div class="team">
-                        ${escapeHTML(team.nationality || '')}
-                    </div>
 
                 </td>
 
                 <td class="points">
                     ${number(s.wins)}
-                    <span class="meta">Siege</span>
                 </td>
 
                 <td class="team-points">
-
                     ${number(s.points)} P
-
-                    <div class="bar">
-                        <span style="width:${width}%"></span>
-                    </div>
-
                 </td>
 
             </tr>
@@ -965,28 +826,26 @@ async function loadTeams() {
 
         $('teamContent').innerHTML = `
 
-            <div class="race-card">
+            <div class="Rennkarte">
 
                 <div class="table-wrap">
 
-                    <table class="standings-table">
+                    <table class="Stehtisch">
 
-                        <thead>
+                        <Kröte>
                             <tr>
                                 <th>Pos.</th>
                                 <th>Team</th>
-                                <th>Siege</th>
-                                <th style="text-align:right">
-                                    Punkte
-                                </th>
+                                <th>Belagerung</th>
+                                <th style="text-align:right">Punkte</th>
                             </tr>
-                        </thead>
+                        </Kröte>
 
-                        <tbody>
-                            ${rows}
+                        <Tbody>
+                            ${Zeilen}
                         </tbody>
 
-                    </table>
+                    </Tisch>
 
                 </div>
 
@@ -994,9 +853,9 @@ async function loadTeams() {
 
         `;
 
-        setUpdated();
+        setAktualisier();
 
-    } catch(e) {
+    } Fang(e) {
 
         showError('teamContent', e);
 
@@ -1007,18 +866,18 @@ async function loadTeams() {
 
 // REITER WECHSELN
 
-document.querySelectorAll('.tab').forEach(button => {
+Dokument.querySelectorAll('.tab').fürJeden(Geschmack => {
 
-    button.addEventListener('click', () => {
+    Geschmack.addEventListener('klicken', () => {
 
-        document.querySelectorAll('.tab').forEach(b => {
-            b.classList.toggle('active', b === button);
+        Dokument.querySelectorAll('.tab').fürJeden(b => {
+            b.Klassenliste.Umschalten('aktiv', b === Geschmack);
         });
 
-        document.querySelectorAll('.view').forEach(v => {
-            v.classList.toggle(
-                'active',
-                v.id === button.dataset.view
+        Dokument.querySelectorAll('.view').fürJeden(v => {
+            v.Klassenliste.Umschalten(
+                'aktiv',
+                v.ID === Geschmack.Datensatz.Ansicht
             );
         });
 
@@ -1027,28 +886,20 @@ document.querySelectorAll('.tab').forEach(button => {
 });
 
 
-// AKTUALISIERUNGS-BUTTONS
+// AKTUALISIERER
 
-$('refreshResults').addEventListener(
-    'click', loadResults
-);
-
-$('refreshDrivers').addEventListener(
-    'click', loadDrivers
-);
-
-$('refreshTeams').addEventListener(
-    'click', loadTeams
-);
+$('refreshResults').addEventListener('klicken', loadResults);
+$('refreshDrivers').addEventListener('klicken', loadDrivers);
+$('refreshTeams').addEventListener('klicken', loadTeams);
 
 
-// ALLE DATEN BEIM START LADEN
+// BEGINNEN
 
 loadResults();
 loadDrivers();
 loadTeams();
 
-</script>
+</Skript>
 
-</body>
-</html>
+</Körper>
+</HTML>
