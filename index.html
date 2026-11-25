@@ -277,13 +277,22 @@ tbody tr:hover {
     <span class="brand-mark">F1</span>
     <span>RACE CENTER</span>
   </div>
+
   <div class="season" id="season">SAISON</div>
 </header>
 
 <nav class="tabs">
-  <button class="tab active" data-tab="results">Ergebnisse</button>
-  <button class="tab" data-tab="drivers">Fahrer-WM</button>
-  <button class="tab" data-tab="teams">Team-WM</button>
+  <button class="tab active" data-tab="results">
+    Ergebnisse
+  </button>
+
+  <button class="tab" data-tab="drivers">
+    Fahrer-WM
+  </button>
+
+  <button class="tab" data-tab="teams">
+    Team-WM
+  </button>
 </nav>
 
 <main class="content">
@@ -292,41 +301,64 @@ tbody tr:hover {
     <div class="section-head">
       <div>
         <div class="section-title">Letztes Rennen</div>
-        <div class="race-name" id="raceName">Wird geladen …</div>
+        <div class="race-name" id="raceName">
+          Wird geladen …
+        </div>
       </div>
-      <button class="refresh" id="refresh">↻ Aktualisieren</button>
+
+      <button class="refresh" id="refresh">
+        ↻ Aktualisieren
+      </button>
     </div>
 
     <div class="table-wrap" id="resultsContent">
-      <div class="message">Ergebnisse werden geladen …</div>
+      <div class="message">
+        Ergebnisse werden geladen …
+      </div>
     </div>
   </section>
 
   <section id="drivers" class="view hidden">
     <div class="section-head">
-      <div class="section-title">Fahrer-Weltmeisterschaft</div>
-      <button class="refresh" data-refresh>↻ Aktualisieren</button>
+      <div class="section-title">
+        Fahrer-Weltmeisterschaft
+      </div>
+
+      <button class="refresh" data-refresh>
+        ↻ Aktualisieren
+      </button>
     </div>
 
     <div class="table-wrap" id="driversContent">
-      <div class="message">Fahrerwertung wird geladen …</div>
+      <div class="message">
+        Fahrerwertung wird geladen …
+      </div>
     </div>
   </section>
 
   <section id="teams" class="view hidden">
     <div class="section-head">
-      <div class="section-title">Konstrukteurs-WM</div>
-      <button class="refresh" data-refresh>↻ Aktualisieren</button>
+      <div class="section-title">
+        Konstrukteurs-WM
+      </div>
+
+      <button class="refresh" data-refresh>
+        ↻ Aktualisieren
+      </button>
     </div>
 
     <div class="table-wrap" id="teamsContent">
-      <div class="message">Teamwertung wird geladen …</div>
+      <div class="message">
+        Teamwertung wird geladen …
+      </div>
     </div>
   </section>
 
   <div class="status" id="status">
     <span class="dot loading"></span>
-    <span id="statusText">Verbindung wird hergestellt …</span>
+    <span id="statusText">
+      Verbindung wird hergestellt …
+    </span>
   </div>
 
 </main>
@@ -368,7 +400,8 @@ const el = {
   refresh: document.getElementById("refresh")
 };
 
-el.season.textContent = "SAISON " + new Date().getFullYear();
+el.season.textContent =
+  "SAISON " + new Date().getFullYear();
 
 let loading = false;
 
@@ -420,13 +453,16 @@ function getCache(key) {
 
     const cache = JSON.parse(stored);
 
-    if (!cache.timestamp || !cache.data) return null;
+    if (!cache.timestamp || !cache.data) {
+      return null;
+    }
 
     if (Date.now() - cache.timestamp > CACHE_DURATION) {
       return null;
     }
 
     return cache.data;
+
   } catch {
     return null;
   }
@@ -441,6 +477,7 @@ function saveCache(key, data) {
         data: data
       })
     );
+
   } catch {
     // Die Seite funktioniert auch ohne lokalen Speicher.
   }
@@ -502,12 +539,15 @@ async function fetchData(key, force = false) {
 
   } catch (error) {
     if (error.name === "AbortError") {
-      throw new Error("Zeitüberschreitung nach 12 Sekunden");
+      throw new Error(
+        "Zeitüberschreitung nach 12 Sekunden"
+      );
     }
 
     if (error instanceof TypeError) {
       throw new Error(
-        "Verbindung fehlgeschlagen. Möglicherweise blockiert die API den Browserzugriff."
+        "Verbindung fehlgeschlagen. " +
+        "Möglicherweise blockiert die API den Browserzugriff."
       );
     }
 
@@ -572,7 +612,8 @@ function renderResults(data) {
   const races = data.RaceTable?.Races || [];
 
   if (races.length === 0) {
-    el.raceName.textContent = "Keine Rennergebnisse verfügbar";
+    el.raceName.textContent =
+      "Keine Rennergebnisse verfügbar";
 
     showMessage(
       el.results,
@@ -591,7 +632,11 @@ function renderResults(data) {
     (race.Circuit?.circuitName || "");
 
   if (results.length === 0) {
-    showMessage(el.results, "Keine Resultate gefunden");
+    showMessage(
+      el.results,
+      "Keine Resultate gefunden"
+    );
+
     return;
   }
 
@@ -727,6 +772,14 @@ async function loadDashboard(force = false) {
   el.refresh.disabled = true;
   el.refresh.textContent = "Lädt …";
 
+  const refreshButtons =
+    document.querySelectorAll("[data-refresh]");
+
+  refreshButtons.forEach(button => {
+    button.disabled = true;
+    button.textContent = "Lädt …";
+  });
+
   const requests = [
     {
       key: "results",
@@ -784,82 +837,98 @@ async function loadDashboard(force = false) {
           outcome.reason.message
         );
 
-        Nachricht Anzeichen(
-          Wut.Behälter,
+        showMessage(
+          request.container,
           "Daten konnten nicht geladen werden",
-          Ergebnis.Grund.Nachricht
+          outcome.reason.message
         );
       }
     });
 
-    wenn (Fehler.Länge > 0) {
+    if (errors.length > 0) {
       setStatus(
-        Fehler.Länge + „ Berech(e) Können nicht Geladen Werden.“,
-        "Fehler"
+        errors.length +
+        " Bereich(e) konnten nicht geladen werden.",
+        "error"
       );
-    } sonst wenn (ZwischengeschichteAnzahl === 3) {
-      setStatus(„Daten aus dem Lokalen Zwischenspeicher.“);
-    } sonst wenn (ZwischengeschichteAnzahl > 0) {
-      setStatus(„Datengeben · Teile aus dem Zwischenspeicher.“);
-    } sonst {
-      setStatus(„Alle Daten ergründen.“);
+
+    } else if (cachedCount === 3) {
+      setStatus(
+        "Daten aus dem lokalen Zwischenspeicher."
+      );
+
+    } else if (cachedCount > 0) {
+      setStatus(
+        "Daten teilweise aus dem Zwischenspeicher."
+      );
+
+    } else {
+      setStatus(
+        "Alle Daten erfolgreich geladen."
+      );
     }
 
-  } Fang (Fehler) {
-    setStatus(Fehler.Nachricht, "Fehler");
+  } catch (error) {
+    setStatus(error.message, "error");
 
-  } Endelich {
-    Beladung = Falsche;
-    el.Aktualisieren.Hintergründ = Falsche;
-    el.Aktualisieren.TextInhalt = "↻ Aktualisieren";
+  } finally {
+    loading = false;
+
+    el.refresh.disabled = false;
+    el.refresh.textContent = "↻ Aktualisieren";
+
+    refreshButtons.forEach(button => {
+      button.disabled = false;
+      button.textContent = "↻ Aktualisieren";
+    });
   }
 }
 
-/* -----------------------
-   REGISTRARKARTEN
----------------------------- */
+/* ----------------------------------
+   TAB-NAVIGATION
+---------------------------------- */
 
-Dokument.querySelectorAll(".tab").fürJeden(Geschmack => {
-  Geschmack.addEventListener("klicken", () => {
-    const TabName = Geschmack.Datensatz.Tab;
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const tabName = tab.dataset.tab;
 
-    Dokument.querySelectorAll(".tab").fürJeden(Tab => {
-      Tab.Klassenliste.Umschalten(
-        "aktiv",
-        Tab === Geschmack
+    document.querySelectorAll(".tab").forEach(item => {
+      item.classList.toggle(
+        "active",
+        item === tab
       );
     });
 
-    Dokument.querySelectorAll(".ansicht").fürJeden(Ansicht => {
-      Ansicht.Klassenliste.Umschalten(
-        "Versteck",
-        Ansicht.ID !== TabName
+    document.querySelectorAll(".view").forEach(view => {
+      view.classList.toggle(
+        "hidden",
+        view.id !== tabName
       );
     });
   });
 });
 
-/* -----------------------
+/* ----------------------------------
    AKTUALISIERUNG
----------------------------- */
+---------------------------------- */
 
-el.Aktualisieren.addEventListener("klicken", () => {
-  loadDashboard(Wahr);
+el.refresh.addEventListener("click", () => {
+  loadDashboard(true);
 });
 
-Dokument.querySelectorAll("[Datenaktualisierung]").fürJeden(Geschmack => {
-  Geschmack.addEventListener("klicken", () => {
-    loadDashboard(Wahr);
+document.querySelectorAll("[data-refresh]").forEach(button => {
+  button.addEventListener("click", () => {
+    loadDashboard(true);
   });
 });
 
-/* -----------------------
-   BEGINNEN
----------------------------- */
+/* ----------------------------------
+   STARTEN
+---------------------------------- */
 
 loadDashboard();
 
-</Skript>
+</script>
 
-</Körper>
-</HTML>
+</body>
+</html>
