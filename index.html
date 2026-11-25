@@ -4,900 +4,860 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#15151e">
-<title>Formula 1 Dashboard</title>
+<title>F1 Race Center</title>
 
 <style>
 :root {
-    --bg: #15151e;
-    --panel: #202029;
-    --line: #383841;
-    --text: #f5f5f5;
-    --muted: #a7a7b1;
-    --red: #e10600;
-    --yellow: #f5c542;
+  --bg: #101014;
+  --panel: #19191f;
+  --panel2: #222229;
+  --border: #303039;
+  --text: #f5f5f6;
+  --muted: #9999a3;
+  --red: #e10600;
+  --green: #35c77a;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
 }
 
-.app {
-    width: 100%;
-    min-height: 100vh;
+.top-line {
+  height: 4px;
+  background: var(--red);
 }
 
-.topline {
-    height: 3px;
-    background: var(--red);
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 14px 11px;
 }
 
-/* HEADER */
-
-header {
-    padding: 9px 13px;
-    background: #191920;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -1px;
 }
 
-.logo {
-    font-size: 21px;
-    font-weight: 1000;
-    font-style: italic;
-    letter-spacing: -2px;
+.brand-mark {
+  color: var(--red);
+  font-size: 24px;
 }
 
 .season {
-    font-size: 10px;
-    color: var(--muted);
-    font-weight: 800;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--panel2);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: bold;
 }
 
-/* NAVIGATION */
-
 .tabs {
-    display: flex;
-    gap: 3px;
-    padding: 7px 9px;
-    background: #191922;
-    border-bottom: 1px solid var(--line);
-    position: sticky;
-    top: 0;
-    z-index: 5;
+  display: flex;
+  gap: 5px;
+  padding: 0 12px 11px;
 }
 
 .tab {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    color: #aaaab4;
-    padding: 9px 4px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
+  flex: 1;
+  padding: 9px 4px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: var(--panel2);
+  color: white;
 }
 
 .tab.active {
-    background: #302023;
-    color: white;
-    border-bottom-color: var(--red);
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
 }
 
-/* CONTENT */
-
-main {
-    padding: 10px;
+.content {
+  padding: 0 12px 12px;
 }
 
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
+.view.hidden {
+  display: none;
 }
 
 .section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0 10px;
 }
 
-.section-head h2 {
-    font-size: 15px;
-    margin: 0;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-.meta {
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 3px;
-}
-
-.refresh {
-    border: 1px solid #45454f;
-    background: #292932;
-    color: #ddd;
-    border-radius: 3px;
-    padding: 6px 8px;
-    font-size: 10px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-/* RACE CARD */
-
-.race-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.race-banner {
-    padding: 9px 11px;
-    background: linear-gradient(100deg, #3a1719, #24242d 70%);
-    border-left: 3px solid var(--red);
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .race-name {
-    font-size: 15px;
-    font-weight: 900;
-    text-transform: uppercase;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
 }
 
-.race-detail {
-    color: #c5c5ce;
-    font-size: 10px;
-    margin-top: 3px;
+.refresh {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--panel2);
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-/* TABLES */
+.refresh:hover {
+  border-color: var(--red);
+}
+
+.refresh:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
 
 .table-wrap {
-    width: 100%;
-    overflow-x: auto;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel);
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 0;
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: 11px;
 }
 
 th {
-    text-align: left;
-    color: #9999a5;
-    font-size: 9px;
-    text-transform: uppercase;
-    padding: 7px 8px;
-    background: #24242d;
-    white-space: nowrap;
+  padding: 9px 7px;
+  background: var(--panel2);
+  color: var(--muted);
+  text-align: left;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 td {
-    padding: 7px 8px;
-    border-top: 1px solid #34343d;
-    font-size: 11px;
-    line-height: 1.2;
+  padding: 8px 7px;
+  border-top: 1px solid #292930;
 }
 
 tbody tr:hover {
-    background: #292932;
+  background: #25252c;
 }
 
-.pos {
-    font-weight: 900;
-    font-size: 12px;
-    width: 30px;
-}
-
-.pos.first {
-    color: var(--yellow);
+.position {
+  color: var(--muted);
+  font-weight: bold;
 }
 
 .driver {
-    font-weight: 800;
+  color: white;
+  font-weight: bold;
 }
 
 .team {
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
 }
 
 .points {
-    font-weight: 900;
-    text-align: right;
-    white-space: nowrap;
+  text-align: right;
+  font-weight: bold;
 }
 
-.pill {
-    display: inline-block;
-    border-radius: 3px;
-    padding: 2px 4px;
-    background: #33333d;
-    color: #ddd;
-    font-size: 9px;
-    font-weight: 800;
+.wins {
+  color: var(--muted);
+  text-align: right;
 }
 
-/* TEAM WM */
-
-.team-name {
-    font-weight: 800;
+.message {
+  padding: 22px 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
 }
 
-.team-points {
-    font-size: 12px;
-    font-weight: 900;
-    text-align: right;
-    white-space: nowrap;
+.message strong {
+  display: block;
+  margin-bottom: 5px;
+  color: white;
 }
 
-/* LOADING / ERRORS */
-
-.loading,
-.empty,
-.error {
-    padding: 18px;
-    text-align: center;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 5px;
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 20px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  overflow-wrap: anywhere;
 }
 
-.error {
-    color: #ff9b97;
+.dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green);
 }
 
-/* FOOTER */
-
-footer {
-    border-top: 1px solid var(--line);
-    padding: 8px 11px;
-    color: #858590;
-    font-size: 9px;
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    flex-wrap: wrap;
+.dot.loading {
+  background: #e0aa36;
 }
 
-footer a {
-    color: #bdbdc6;
-    text-decoration: none;
+.dot.error {
+  background: var(--red);
 }
 
-/* SMALL WIDGET */
-
-@media(max-width: 450px) {
-
-    main {
-        padding: 7px;
-    }
-
-    header {
-        padding: 7px 10px;
-    }
-
-    .tabs {
-        padding: 5px;
-    }
-
-    .tab {
-        font-size: 10px;
-        padding: 8px 2px;
-    }
-
-    .section-head h2 {
-        font-size: 13px;
-    }
-
-    th {
-        padding: 6px 5px;
-        font-size: 8px;
-    }
-
-    td {
-        padding: 6px 5px;
-        font-size: 10px;
-    }
-
-    .team {
-        font-size: 9px;
-    }
+.footer {
+  padding: 8px 12px 12px;
+  color: #686871;
+  text-align: center;
+  font-size: 9px;
 }
 
+@media (max-width: 360px) {
+  .brand {
+    font-size: 17px;
+  }
+
+  .tab {
+    padding: 8px 2px;
+    font-size: 10px;
+  }
+
+  td, th {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="top-line"></div>
 
-<div class="topline"></div>
-
-<header>
-    <div class="logo">F1</div>
-    <div class="season" id="seasonBadge">SAISON —</div>
+<header class="header">
+  <div class="brand">
+    <span class="brand-mark">F1</span>
+    <span>RACE CENTER</span>
+  </div>
+  <div class="season" id="season">SAISON</div>
 </header>
 
 <nav class="tabs">
-
-    <button class="tab active" data-view="results">
-        Ergebnisse
-    </button>
-
-    <button class="tab" data-view="drivers">
-        Fahrer-WM
-    </button>
-
-    <button class="tab" data-view="teams">
-        Team-WM
-    </button>
-
+  <button class="tab active" data-tab="results">Ergebnisse</button>
+  <button class="tab" data-tab="drivers">Fahrer-WM</button>
+  <button class="tab" data-tab="teams">Team-WM</button>
 </nav>
 
-<main>
+<main class="content">
 
-<!-- ERGEBNISSE -->
-
-<section class="view active" id="results">
-
+  <section id="results" class="view">
     <div class="section-head">
-        <div>
-            <h2>Letztes Rennen</h2>
-            <div class="meta" id="raceMeta">Lade Ergebnisse ...</div>
-        </div>
-
-        <button class="refresh" id="refreshResults">
-            ↻
-        </button>
+      <div>
+        <div class="section-title">Letztes Rennen</div>
+        <div class="race-name" id="raceName">Wird geladen …</div>
+      </div>
+      <button class="refresh" id="refresh">↻ Aktualisieren</button>
     </div>
 
-    <div id="raceContent" class="loading">
-        Rennergebnisse werden geladen ...
+    <div class="table-wrap" id="resultsContent">
+      <div class="message">Ergebnisse werden geladen …</div>
     </div>
+  </section>
 
-</section>
-
-
-<!-- FAHRER WM -->
-
-<section class="view" id="drivers">
-
+  <section id="drivers" class="view hidden">
     <div class="section-head">
-        <div>
-            <h2>Fahrer-WM</h2>
-            <div class="meta" id="driverMeta">
-                Aktueller Meisterschaftsstand
-            </div>
-        </div>
-
-        <button class="refresh" id="refreshDrivers">
-            ↻
-        </button>
+      <div class="section-title">Fahrer-Weltmeisterschaft</div>
+      <button class="refresh" data-refresh>↻ Aktualisieren</button>
     </div>
 
-    <div id="driverContent" class="loading">
-        Fahrerwertung wird geladen ...
+    <div class="table-wrap" id="driversContent">
+      <div class="message">Fahrerwertung wird geladen …</div>
     </div>
+  </section>
 
-</section>
-
-
-<!-- TEAM WM -->
-
-<section class="view" id="teams">
-
+  <section id="teams" class="view hidden">
     <div class="section-head">
-        <div>
-            <h2>Team-WM</h2>
-            <div class="meta" id="teamMeta">
-                Aktueller Meisterschaftsstand
-            </div>
-        </div>
-
-        <button class="refresh" id="refreshTeams">
-            ↻
-        </button>
+      <div class="section-title">Konstrukteurs-WM</div>
+      <button class="refresh" data-refresh>↻ Aktualisieren</button>
     </div>
 
-    <div id="teamContent" class="loading">
-        Teamwertung wird geladen ...
+    <div class="table-wrap" id="teamsContent">
+      <div class="message">Teamwertung wird geladen …</div>
     </div>
+  </section>
 
-</section>
+  <div class="status" id="status">
+    <span class="dot loading"></span>
+    <span id="statusText">Verbindung wird hergestellt …</span>
+  </div>
 
 </main>
 
-<footer>
-    <span id="updated">Jolpica F1 API</span>
-    <span>Formula 1 Dashboard</span>
+<footer class="footer">
+  F1 Daten von Jolpica API
 </footer>
 
-</div>
-
-
 <script>
+"use strict";
 
-const API = 'https://api.jolpi.ca/ergast/f1';
-const YEAR = 'current';
+/* ----------------------------------
+   KONFIGURATION
+---------------------------------- */
 
-const $ = id => document.getElementById(id);
+const API_BASE = "https://api.jolpi.ca/ergast/f1";
 
-const number = value =>
-    Number(value || 0).toLocaleString('de-DE');
+const ENDPOINTS = {
+  results: "/current/last/results.json?limit=100",
+  drivers: "/current/driverstandings.json?limit=100",
+  teams: "/current/constructorstandings.json?limit=100"
+};
 
-const escapeHTML = value =>
-    String(value ?? '').replace(/[&<>"']/g, c => ({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#39;'
-    }[c]));
+const TIMEOUT = 12000;
+const CACHE_DURATION = 5 * 60 * 1000;
 
+/* ----------------------------------
+   ELEMENTE
+---------------------------------- */
 
-// API ABFRAGE
+const el = {
+  season: document.getElementById("season"),
+  raceName: document.getElementById("raceName"),
+  results: document.getElementById("resultsContent"),
+  drivers: document.getElementById("driversContent"),
+  teams: document.getElementById("teamsContent"),
+  status: document.getElementById("status"),
+  statusText: document.getElementById("statusText"),
+  refresh: document.getElementById("refresh")
+};
 
-async function api(path) {
+el.season.textContent = "SAISON " + new Date().getFullYear();
 
+let loading = false;
+
+/* ----------------------------------
+   STATUS UND MELDUNGEN
+---------------------------------- */
+
+function setStatus(message, type = "ok") {
+  const dot = el.status.querySelector(".dot");
+
+  dot.className = "dot";
+
+  if (type === "loading") {
+    dot.classList.add("loading");
+  }
+
+  if (type === "error") {
+    dot.classList.add("error");
+  }
+
+  el.statusText.textContent = message;
+}
+
+function showMessage(container, title, detail = "") {
+  container.replaceChildren();
+
+  const box = document.createElement("div");
+  box.className = "message";
+
+  const heading = document.createElement("strong");
+  heading.textContent = title;
+
+  const description = document.createElement("span");
+  description.textContent = detail;
+
+  box.append(heading, description);
+  container.appendChild(box);
+}
+
+/* ----------------------------------
+   LOKALER CACHE
+---------------------------------- */
+
+function getCache(key) {
+  try {
+    const stored = localStorage.getItem("f1_" + key);
+
+    if (!stored) return null;
+
+    const cache = JSON.parse(stored);
+
+    if (!cache.timestamp || !cache.data) return null;
+
+    if (Date.now() - cache.timestamp > CACHE_DURATION) {
+      return null;
+    }
+
+    return cache.data;
+  } catch {
+    return null;
+  }
+}
+
+function saveCache(key, data) {
+  try {
+    localStorage.setItem(
+      "f1_" + key,
+      JSON.stringify({
+        timestamp: Date.now(),
+        data: data
+      })
+    );
+  } catch {
+    // Die Seite funktioniert auch ohne lokalen Speicher.
+  }
+}
+
+/* ----------------------------------
+   API-ABRUF MIT ZEITLIMIT
+---------------------------------- */
+
+async function fetchData(key, force = false) {
+  if (!force) {
+    const cached = getCache(key);
+
+    if (cached) {
+      return {
+        data: cached,
+        cached: true
+      };
+    }
+  }
+
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, TIMEOUT);
+
+  try {
     const response = await fetch(
-        `${API}/${path}.json?limit=100`,
-        {
-            headers: {'Accept':'application/json'},
-            cache: 'no-store'
-        }
+      API_BASE + ENDPOINTS[key],
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "omit",
+        headers: {
+          "Accept": "application/json"
+        },
+        signal: controller.signal,
+        cache: "no-store"
+      }
     );
 
     if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      throw new Error("HTTP " + response.status);
     }
 
     const json = await response.json();
 
-    return json.MRData;
-}
-
-
-// FEHLERANZEIGE
-
-function showError(id, error) {
-
-    $(id).className = 'error';
-
-    $(id).textContent =
-        `Daten konnten nicht geladen werden. ${error.message || error}`;
-
-}
-
-
-// SAISON
-
-function setSeason(data) {
-
-    const season = data?.season || new Date().getFullYear();
-
-    $('seasonBadge').textContent = `SAISON ${season}`;
-
-}
-
-
-// AKTUALISIERUNG
-
-function setUpdated() {
-
-    $('updated').textContent =
-        `Aktualisiert: ${new Date().toLocaleTimeString('de-DE', {
-            hour:'2-digit',
-            minute:'2-digit'
-        })}`;
-
-}
-
-
-// LETZTES RENNEN
-
-function renderRace(race) {
-
-    if (!race) {
-
-        $('raceContent').className = 'empty';
-        $('raceContent').textContent =
-            'Keine Rennergebnisse verfügbar.';
-
-        return;
+    if (!json || !json.MRData) {
+      throw new Error("Ungültige API-Antwort");
     }
 
-    const circuit = race.Circuit || {};
-    const location = circuit.Location || {};
+    saveCache(key, json.MRData);
 
-    $('raceMeta').textContent =
-        `Runde ${race.round} · ${
-            new Date(race.date+'T12:00:00').toLocaleDateString(
-                'de-DE',
-                {day:'2-digit',month:'short',year:'numeric'}
-            )
-        }`;
+    return {
+      data: json.MRData,
+      cached: false
+    };
 
-    const rows = (race.Results || []).map(r => {
-
-        const driver = r.Driver || {};
-        const team = r.Constructor?.name || '—';
-
-        const pos = r.positionText || r.position || '—';
-
-        return `
-        <tr>
-
-            <td class="pos ${pos==='1'?'first':''}">
-                ${escapeHTML(pos)}
-            </td>
-
-            <td>
-                <div class="driver">
-                    ${escapeHTML(driver.givenName)}
-                    ${escapeHTML(driver.familyName)}
-                </div>
-
-                <div class="team">
-                    ${escapeHTML(team)}
-                </div>
-            </td>
-
-            <td>
-                <span class="pill">
-                    ${escapeHTML(r.status || '—')}
-                </span>
-            </td>
-
-            <td class="points">
-                ${escapeHTML(r.points || '0')} P
-            </td>
-
-        </tr>
-        `;
-
-    }).join('');
-
-    $('raceContent').className = '';
-
-    $('raceContent').innerHTML = `
-
-        <div class="race-card">
-
-            <div class="race-banner">
-
-                <div class="race-name">
-                    ${escapeHTML(race.raceName)}
-                </div>
-
-                <div class="race-detail">
-                    ${escapeHTML(circuit.circuitName || '')}
-                    ·
-                    ${escapeHTML(location.locality || '')}
-                    ${location.country
-                        ? ', '+escapeHTML(location.country)
-                        : ''}
-                </div>
-
-            </div>
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Pos.</th>
-                            <th>Fahrer / Team</th>
-                            <th>Status</th>
-                            <th style="text-align:right">Punkte</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        ${rows}
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-// ERGEBNISSE LADEN
-
-async function loadResults() {
-
-    $('raceContent').className = 'loading';
-    $('raceContent').textContent = 'Lade Ergebnisse ...';
-
-    try {
-
-        const data = await api(`${YEAR}/last/results`);
-
-        setSeason(data.RaceTable);
-
-        renderRace(data.RaceTable?.Races?.[0]);
-
-        setUpdated();
-
-    } catch(e) {
-
-        showError('raceContent', e);
-
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new Error("Zeitüberschreitung nach 12 Sekunden");
     }
 
+    if (error instanceof TypeError) {
+      throw new Error(
+        "Verbindung fehlgeschlagen. Möglicherweise blockiert die API den Browserzugriff."
+      );
+    }
+
+    throw error;
+
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
+/* ----------------------------------
+   TABELLEN
+---------------------------------- */
 
-// FAHRER-WM
+function createCell(row, value, className = "") {
+  const cell = document.createElement("td");
 
-async function loadDrivers() {
+  cell.textContent =
+    value === null || value === undefined || value === ""
+      ? "–"
+      : value;
 
-    $('driverContent').className = 'loading';
-    $('driverContent').textContent = 'Lade Fahrerwertung ...';
+  if (className) {
+    cell.className = className;
+  }
 
-    try {
+  row.appendChild(cell);
+  return cell;
+}
 
-        const data = await api(`${YEAR}/driverstandings`);
+function createTable(headers, rows) {
+  const table = document.createElement("table");
 
-        const list =
-            data.StandingsTable?.StandingsLists?.[0];
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
 
-        setSeason(data.StandingsTable);
+  headers.forEach(header => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headRow.appendChild(th);
+  });
 
-        if (!list?.DriverStandings?.length) {
-            throw new Error('Keine Wertungsdaten vorhanden.');
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  rows.forEach(row => {
+    tbody.appendChild(row);
+  });
+
+  table.appendChild(tbody);
+
+  return table;
+}
+
+/* ----------------------------------
+   LETZTES RENNEN
+---------------------------------- */
+
+function renderResults(data) {
+  const races = data.RaceTable?.Races || [];
+
+  if (races.length === 0) {
+    el.raceName.textContent = "Keine Rennergebnisse verfügbar";
+
+    showMessage(
+      el.results,
+      "Keine Ergebnisse vorhanden",
+      "Für diese Saison wurde noch kein Rennen abgeschlossen."
+    );
+
+    return;
+  }
+
+  const race = races[0];
+  const results = race.Results || [];
+
+  el.raceName.textContent =
+    race.raceName + " · " +
+    (race.Circuit?.circuitName || "");
+
+  if (results.length === 0) {
+    showMessage(el.results, "Keine Resultate gefunden");
+    return;
+  }
+
+  const rows = results.map(result => {
+    const row = document.createElement("tr");
+
+    const driver = result.Driver || {};
+    const constructor = result.Constructor || {};
+
+    const driverName =
+      (driver.givenName || "") + " " +
+      (driver.familyName || "");
+
+    const resultTime =
+      result.Time?.time ||
+      result.status ||
+      "–";
+
+    createCell(row, result.position, "position");
+    createCell(row, driverName.trim(), "driver");
+    createCell(row, constructor.name, "team");
+    createCell(row, result.points, "points");
+    createCell(row, resultTime);
+
+    return row;
+  });
+
+  el.results.replaceChildren(
+    createTable(
+      ["Pos.", "Fahrer", "Team", "Pkt.", "Zeit / Status"],
+      rows
+    )
+  );
+}
+
+/* ----------------------------------
+   FAHRER-WM
+---------------------------------- */
+
+function renderDrivers(data) {
+  const standings =
+    data.StandingsTable?.StandingsLists?.[0]
+      ?.DriverStandings || [];
+
+  if (standings.length === 0) {
+    showMessage(
+      el.drivers,
+      "Keine Fahrerwertung verfügbar",
+      "Die API hat aktuell keine Fahrerwertung geliefert."
+    );
+
+    return;
+  }
+
+  const rows = standings.map(item => {
+    const row = document.createElement("tr");
+
+    const driver = item.Driver || {};
+    const constructor = item.Constructors?.[0] || {};
+
+    const name =
+      (driver.givenName || "") + " " +
+      (driver.familyName || "");
+
+    createCell(row, item.position, "position");
+    createCell(row, name.trim(), "driver");
+    createCell(row, constructor.name, "team");
+    createCell(row, item.points, "points");
+    createCell(row, item.wins, "wins");
+
+    return row;
+  });
+
+  el.drivers.replaceChildren(
+    createTable(
+      ["Pos.", "Fahrer", "Team", "Pkt.", "Siege"],
+      rows
+    )
+  );
+}
+
+/* ----------------------------------
+   TEAM-WM
+---------------------------------- */
+
+function renderTeams(data) {
+  const standings =
+    data.StandingsTable?.StandingsLists?.[0]
+      ?.ConstructorStandings || [];
+
+  if (standings.length === 0) {
+    showMessage(
+      el.teams,
+      "Keine Teamwertung verfügbar",
+      "Die API hat aktuell keine Konstrukteurswertung geliefert."
+    );
+
+    return;
+  }
+
+  const rows = standings.map(item => {
+    const row = document.createElement("tr");
+
+    const constructor = item.Constructor || {};
+
+    createCell(row, item.position, "position");
+    createCell(row, constructor.name, "driver");
+    createCell(row, item.points, "points");
+    createCell(row, item.wins, "wins");
+
+    return row;
+  });
+
+  el.teams.replaceChildren(
+    createTable(
+      ["Pos.", "Team", "Pkt.", "Siege"],
+      rows
+    )
+  );
+}
+
+/* ----------------------------------
+   DASHBOARD LADEN
+---------------------------------- */
+
+async function loadDashboard(force = false) {
+  if (loading) return;
+
+  loading = true;
+
+  setStatus("Daten werden geladen …", "loading");
+
+  el.refresh.disabled = true;
+  el.refresh.textContent = "Lädt …";
+
+  const requests = [
+    {
+      key: "results",
+      render: renderResults,
+      container: el.results
+    },
+    {
+      key: "drivers",
+      render: renderDrivers,
+      container: el.drivers
+    },
+    {
+      key: "teams",
+      render: renderTeams,
+      container: el.teams
+    }
+  ];
+
+  let errors = [];
+  let cachedCount = 0;
+
+  try {
+    const outcomes = await Promise.allSettled(
+      requests.map(request =>
+        fetchData(request.key, force)
+      )
+    );
+
+    outcomes.forEach((outcome, index) => {
+      const request = requests[index];
+
+      if (outcome.status === "fulfilled") {
+        try {
+          request.render(outcome.value.data);
+
+          if (outcome.value.cached) {
+            cachedCount++;
+          }
+
+        } catch (error) {
+          errors.push(
+            request.key + ": " + error.message
+          );
+
+          showMessage(
+            request.container,
+            "Darstellungsfehler",
+            error.message
+          );
         }
 
-        $('driverMeta').textContent =
-            `Nach Runde ${list.round || '—'}`;
-
-        const rows = list.DriverStandings.map((s,i) => {
-
-            const d = s.Driver || {};
-
-            const team =
-                s.Constructors?.map(x => x.name).join(', ') || '—';
-
-            return `
-
-            <tr>
-
-                <td class="pos ${i===0?'first':''}">
-                    ${escapeHTML(s.position || i+1)}
-                </td>
-
-                <td>
-
-                    <div class="driver">
-                        ${escapeHTML(d.givenName)}
-                        ${escapeHTML(d.familyName)}
-                    </div>
-
-                    <div class="team">
-                        ${escapeHTML(team)}
-                    </div>
-
-                </td>
-
-                <td class="points">
-                    ${number(s.wins)}
-                </td>
-
-                <td class="points">
-                    ${number(s.points)} P
-                </td>
-
-            </tr>
-
-            `;
-
-        }).join('');
-
-        $('driverContent').className = '';
-
-        $('driverContent').innerHTML = `
-
-            <div class="race-card">
-
-                <div class="table-wrap">
-
-                    <table class="standings-table">
-
-                        <thead>
-                            <tr>
-                                <th>Pos.</th>
-                                <th>Fahrer</th>
-                                <th>Siege</th>
-                                <th style="text-align:right">Punkte</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            ${rows}
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        `;
-
-        setUpdated();
-
-    } catch(e) {
-
-        showError('driverContent', e);
-
-    }
-
-}
-
-
-// TEAM-WM
-
-async function loadTeams() {
-
-    $('teamContent').className = 'loading';
-    $('teamContent').textContent = 'Lade Teamwertung ...';
-
-    try {
-
-        const data = await api(`${YEAR}/constructorstandings`);
-
-        const list =
-            data.StandingsTable?.StandingsLists?.[0];
-
-        setSeason(data.StandingsTable);
-
-        if (!list?.ConstructorStandings?.length) {
-            throw new Error('Keine Wertungsdaten vorhanden.');
-        }
-
-        $('teamMeta').textContent =
-            `Nach Runde ${list.round || '—'}`;
-
-        const rows = list.ConstructorStandings.map((s,i) => {
-
-            const team = s.Constructor || {};
-
-            return `
-
-            <tr>
-
-                <td class="pos ${i===0?'first':''}">
-                    ${escapeHTML(s.position || i+1)}
-                </td>
-
-                <td>
-
-                    <span class="team-name">
-                        ${escapeHTML(team.name || '—')}
-                    </span>
-
-                </td>
-
-                <td class="points">
-                    ${number(s.wins)}
-                </td>
-
-                <td class="team-points">
-                    ${number(s.points)} P
-                </td>
-
-            </tr>
-
-            `;
-
-        }).join('');
-
-        $('teamContent').className = '';
-
-        $('teamContent').innerHTML = `
-
-            <div class="Rennkarte">
-
-                <div class="table-wrap">
-
-                    <table class="Stehtisch">
-
-                        <Kröte>
-                            <tr>
-                                <th>Pos.</th>
-                                <th>Team</th>
-                                <th>Belagerung</th>
-                                <th style="text-align:right">Punkte</th>
-                            </tr>
-                        </Kröte>
-
-                        <Tbody>
-                            ${Zeilen}
-                        </tbody>
-
-                    </Tisch>
-
-                </div>
-
-            </div>
-
-        `;
-
-        setAktualisier();
-
-    } Fang(e) {
-
-        showError('teamContent', e);
-
-    }
-
-}
-
-
-// REITER WECHSELN
-
-Dokument.querySelectorAll('.tab').fürJeden(Geschmack => {
-
-    Geschmack.addEventListener('klicken', () => {
-
-        Dokument.querySelectorAll('.tab').fürJeden(b => {
-            b.Klassenliste.Umschalten('aktiv', b === Geschmack);
-        });
-
-        Dokument.querySelectorAll('.view').fürJeden(v => {
-            v.Klassenliste.Umschalten(
-                'aktiv',
-                v.ID === Geschmack.Datensatz.Ansicht
-            );
-        });
-
+      } else {
+        errors.push(
+          request.key + ": " +
+          outcome.reason.message
+        );
+
+        Nachricht anzeigen(
+          Wut.Behälter,
+          "Daten konnten nicht geladen werden",
+          Ergebnis.Grund.Nachricht
+        );
+      }
     });
 
+    wenn (Fehler.Länge > 0) {
+      setStatus(
+        Fehler.Länge + „ Berech(e) Können nicht Geladen Werden.“,
+        "Fehler"
+      );
+    } sonst wenn (ZwischengeschichteAnzahl === 3) {
+      setStatus(„Daten aus dem Lokalen Zwischenspeicher.“);
+    } sonst wenn (ZwischengeschichteAnzahl > 0) {
+      setStatus(„Datengeben · Teile aus dem Zwischenspeicher.“);
+    } sonst {
+      setStatus(„Alle Daten ergründen.“);
+    }
+
+  } Fang (Fehler) {
+    setStatus(Fehler.Nachricht, "Fehler");
+
+  } Endelich {
+    Beladung = Falsche;
+    el.Aktualisieren.Hintergründ = Falsche;
+    el.Aktualisieren.TextInhalt = "↻ Aktualisieren";
+  }
+}
+
+/* --------------------------
+   REGISTRARKARTEN
+--------------------------- */
+
+Dokument.querySelectorAll(".tab").fürJeden(Geschmack => {
+  Geschmack.addEventListener("klicken", () => {
+    const TabName = Geschmack.Datensatz.Tab;
+
+    Dokument.querySelectorAll(".tab").fürJeden(Tab => {
+      Tab.Klassenliste.Umschalten(
+        "aktiv",
+        Tab === Geschmack
+      );
+    });
+
+    Dokument.querySelectorAll(".ansicht").fürJeden(Ansicht => {
+      Ansicht.Klassenliste.Umschalten(
+        "Versteck",
+        Ansicht.ID !== TabName
+      );
+    });
+  });
 });
 
+/* -------------------
+   AKTUALISIERUNG
+-------------------------- */
 
-// AKTUALISIERER
+el.Aktualisieren.addEventListener("klicken", () => {
+  loadDashboard(Wahr);
+});
 
-$('refreshResults').addEventListener('klicken', loadResults);
-$('refreshDrivers').addEventListener('klicken', loadDrivers);
-$('refreshTeams').addEventListener('klicken', loadTeams);
+Dokument.querySelectorAll("[Datenaktualisierung]").fürJeden(Geschmack => {
+  Geschmack.addEventListener("klicken", () => {
+    loadDashboard(Wahr);
+  });
+});
 
+/* -----------------
+   BEGINNEN
+------------------------- */
 
-// BEGINNEN
-
-loadResults();
-loadDrivers();
-loadTeams();
+loadDashboard();
 
 </Skript>
 
