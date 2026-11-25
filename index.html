@@ -1,0 +1,1054 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#15151e">
+<title>F1 Dashboard</title>
+
+<style>
+:root {
+    --bg: #15151e;
+    --panel: #1f1f27;
+    --panel2: #292932;
+    --line: #383841;
+    --text: #f5f5f5;
+    --muted: #a7a7b1;
+    --red: #e10600;
+    --green: #00d084;
+    --yellow: #f5c542;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.app {
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.topline {
+    height: 5px;
+    background: var(--red);
+}
+
+header {
+    padding: 20px 24px 16px;
+    background: linear-gradient(115deg, #20202a, #15151e);
+    border-bottom: 1px solid var(--line);
+}
+
+.brandrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.f1mark {
+    font-weight: 1000;
+    font-style: italic;
+    font-size: 32px;
+    letter-spacing: -3px;
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+.season {
+    background: #30303a;
+    border: 1px solid #44444e;
+    border-radius: 5px;
+    padding: 7px 11px;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+h1 {
+    font-size: clamp(22px, 4vw, 31px);
+    margin: 17px 0 4px;
+    font-weight: 900;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.tabs {
+    display: flex;
+    gap: 7px;
+    padding: 12px 20px;
+    background: #191922;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.tab {
+    border: 0;
+    background: transparent;
+    color: #aaaab4;
+    padding: 11px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+}
+
+.tab:hover {
+    color: white;
+    background: #292932;
+}
+
+.tab.active {
+    background: #2b2022;
+    color: white;
+    border-bottom-color: var(--red);
+}
+
+main {
+    padding: 20px 22px 26px;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 2px 0 15px;
+}
+
+.section-head h2 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.kicker {
+    font-size: 10px;
+    color: #ff302a;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.meta {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.race-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.race-banner {
+    padding: 15px 17px;
+    background: linear-gradient(100deg, #3a1719, #24242d 70%);
+    border-left: 5px solid var(--red);
+}
+
+.race-name {
+    font-size: 19px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.race-detail {
+    color: #c5c5ce;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 470px;
+}
+
+th {
+    text-align: left;
+    color: #9c9ca7;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    padding: 11px 13px;
+    background: #22222b;
+}
+
+td {
+    padding: 11px 13px;
+    border-top: 1px solid #34343d;
+    font-size: 12px;
+}
+
+tbody tr:hover {
+    background: #282832;
+}
+
+.pos {
+    font-weight: 900;
+    font-size: 14px;
+    width: 42px;
+}
+
+.pos.first {
+    color: var(--yellow);
+}
+
+.driver {
+    font-weight: 800;
+}
+
+.team {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.points {
+    font-weight: 900;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.pill {
+    display: inline-block;
+    border-radius: 3px;
+    padding: 3px 6px;
+    background: #33333d;
+    color: #ddd;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.standings-table .pos {
+    width: 52px;
+}
+
+.teamline {
+    display: inline-block;
+    width: 3px;
+    height: 28px;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+    background: var(--red);
+}
+
+.team-name {
+    font-weight: 800;
+}
+
+.team-points {
+    font-size: 15px;
+    font-weight: 900;
+    text-align: right;
+}
+
+.bar {
+    height: 5px;
+    background: #393943;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.bar span {
+    display: block;
+    height: 100%;
+    background: var(--red);
+    border-radius: 10px;
+}
+
+.loading, .empty, .error {
+    padding: 26px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+
+.error {
+    color: #ff9b97;
+}
+
+.refresh {
+    border: 1px solid #45454f;
+    background: #292932;
+    color: #ddd;
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.refresh:hover {
+    border-color: var(--red);
+}
+
+footer {
+    border-top: 1px solid var(--line);
+    padding: 13px 22px;
+    color: #858590;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+footer a {
+    color: #bdbdc6;
+    text-decoration: none;
+}
+
+@media(max-width: 600px) {
+    header {
+        padding: 16px;
+    }
+
+    .tabs {
+        padding: 9px;
+        gap: 3px;
+    }
+
+    .tab {
+        flex: 1;
+        padding: 10px 5px;
+        font-size: 10px;
+    }
+
+    main {
+        padding: 14px 10px 20px;
+    }
+
+    .section-head {
+        align-items: flex-start;
+    }
+
+    th, td {
+        padding: 10px 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="topline"></div>
+
+<header>
+    <div class="brandrow">
+
+        <div class="brand">
+            <div class="f1mark">F1</div>
+
+            <div>
+                <strong>RACE CENTRE</strong>
+                <small>Results · Standings · Season</small>
+            </div>
+        </div>
+
+        <div class="season" id="seasonBadge">
+            SAISON —
+        </div>
+
+    </div>
+
+    <h1>FORMULA 1 DASHBOARD</h1>
+
+    <div class="subtitle">
+        Die wichtigsten Daten der Königsklasse.
+    </div>
+</header>
+
+<nav class="tabs">
+
+    <button class="tab active" data-view="results">
+        Ergebnisse
+    </button>
+
+    <button class="tab" data-view="drivers">
+        Fahrer-WM
+    </button>
+
+    <button class="tab" data-view="teams">
+        Team-WM
+    </button>
+
+</nav>
+
+<main>
+
+<!-- ERGEBNISSE -->
+
+<section class="view active" id="results">
+
+    <div class="section-head">
+
+        <div>
+            <div class="kicker">Race results</div>
+            <h2>Letztes Rennen</h2>
+            <div class="meta" id="raceMeta">
+                Lade Rennergebnisse ...
+            </div>
+        </div>
+
+        <button class="refresh" id="refreshResults">
+            ↻ Aktualisieren
+        </button>
+
+    </div>
+
+    <div id="raceContent" class="loading">
+        Rennergebnisse werden geladen ...
+    </div>
+
+</section>
+
+
+<!-- FAHRER-WM -->
+
+<section class="view" id="drivers">
+
+    <div class="section-head">
+
+        <div>
+            <div class="kicker">World championship</div>
+            <h2>Fahrer-Weltmeisterschaft</h2>
+            <div class="meta" id="driverMeta">
+                Aktueller Meisterschaftsstand
+            </div>
+        </div>
+
+        <button class="refresh" id="refreshDrivers">
+            ↻ Aktualisieren
+        </button>
+
+    </div>
+
+    <div id="driverContent" class="loading">
+        Fahrerwertung wird geladen ...
+    </div>
+
+</section>
+
+
+<!-- TEAM-WM -->
+
+<section class="view" id="teams">
+
+    <div class="section-head">
+
+        <div>
+            <div class="kicker">World championship</div>
+            <h2>Konstrukteurs-Weltmeisterschaft</h2>
+            <div class="meta" id="teamMeta">
+                Aktueller Meisterschaftsstand
+            </div>
+        </div>
+
+        <button class="refresh" id="refreshTeams">
+            ↻ Aktualisieren
+        </button>
+
+    </div>
+
+    <div id="teamContent" class="loading">
+        Teamwertung wird geladen ...
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <span id="updated">
+        Datenquelle: Jolpica F1 API
+    </span>
+
+    <span>
+        <a href="https://github.com/jolpica/jolpica-f1"
+           target="_blank" rel="noopener">
+            API / Datenquelle
+        </a>
+    </span>
+
+</footer>
+
+</div>
+
+
+<script>
+
+// API
+const API = 'https://api.jolpi.ca/ergast/f1';
+const YEAR = 'current';
+
+const $ = id => document.getElementById(id);
+
+const number = value =>
+    Number(value || 0).toLocaleString('de-DE');
+
+const escapeHTML = value =>
+    String(value ?? '').replace(/[&<>"']/g, c => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+    }[c]));
+
+
+// API ABFRAGE
+
+async function api(path) {
+
+    const response = await fetch(
+        `${API}/${path}.json?limit=100`,
+        {
+            headers: {'Accept':'application/json'},
+            cache: 'no-store'
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    return json.MRData;
+}
+
+
+// FEHLERANZEIGE
+
+function showError(id, error) {
+
+    $(id).className = 'error';
+
+    $(id).textContent =
+        `Daten konnten nicht geladen werden. 
+        ${error.message || error}. Bitte später erneut versuchen.`;
+
+}
+
+
+// SAISON
+
+function setSeason(data) {
+
+    const season = data?.season || new Date().getFullYear();
+
+    $('seasonBadge').textContent = `SAISON ${season}`;
+
+}
+
+
+// AKTUALISIERUNGSZEIT
+
+function setUpdated() {
+
+    $('updated').textContent =
+        `Datenquelle: Jolpica F1 API · Stand: ${
+            new Date().toLocaleString('de-DE', {
+                dateStyle:'short',
+                timeStyle:'short'
+            })
+        }`;
+
+}
+
+
+// LETZTES RENNEN
+
+function renderRace(race) {
+
+    if (!race) {
+
+        $('raceContent').className = 'empty';
+        $('raceContent').textContent =
+            'Für diese Saison liegen noch keine Rennergebnisse vor.';
+
+        return;
+    }
+
+    const circuit = race.Circuit || {};
+    const location = circuit.Location || {};
+
+    $('raceMeta').textContent =
+        `Runde ${race.round} · ${
+            new Date(race.date+'T12:00:00').toLocaleDateString(
+                'de-DE',
+                {day:'2-digit',month:'long',year:'numeric'}
+            )
+        }`;
+
+    const rows = (race.Results || []).map(r => {
+
+        const driver = r.Driver || {};
+        const team = r.Constructor?.name || '—';
+
+        const pos = r.positionText || r.position || '—';
+
+        return `
+        <tr>
+
+            <td class="pos ${pos==='1'?'first':''}">
+                ${escapeHTML(pos)}
+            </td>
+
+            <td>
+                <div class="driver">
+                    ${escapeHTML(driver.givenName)}
+                    ${escapeHTML(driver.familyName)}
+                    <span style="color:#999">
+                        ${escapeHTML(driver.code || '')}
+                    </span>
+                </div>
+
+                <div class="team">
+                    ${escapeHTML(team)}
+                </div>
+            </td>
+
+            <td>
+                <span class="pill">
+                    ${escapeHTML(r.status || '—')}
+                </span>
+            </td>
+
+            <td class="points">
+                ${escapeHTML(r.points || '0')} P
+            </td>
+
+        </tr>
+        `;
+
+    }).join('');
+
+    $('raceContent').className = '';
+
+    $('raceContent').innerHTML = `
+
+        <div class="race-card">
+
+            <div class="race-banner">
+
+                <div class="race-name">
+                    ${escapeHTML(race.raceName)}
+                </div>
+
+                <div class="race-detail">
+                    ${escapeHTML(circuit.circuitName || '')}
+                    ·
+                    ${escapeHTML(location.locality || '')}
+                    ${location.country
+                        ? ', '+escapeHTML(location.country)
+                        : ''}
+                </div>
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Pos.</th>
+                            <th>Fahrer / Team</th>
+                            <th>Status</th>
+                            <th style="text-align:right">
+                                Punkte
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        ${rows}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// ERGEBNISSE LADEN
+
+async function loadResults() {
+
+    $('raceContent').className = 'loading';
+    $('raceContent').textContent =
+        'Rennergebnisse werden geladen ...';
+
+    try {
+
+        const data = await api(`${YEAR}/last/results`);
+
+        setSeason(data.RaceTable);
+
+        renderRace(data.RaceTable?.Races?.[0]);
+
+        setUpdated();
+
+    } catch(e) {
+
+        showError('raceContent', e);
+
+    }
+
+}
+
+
+// FAHRER-WM LADEN
+
+async function loadDrivers() {
+
+    $('driverContent').className = 'loading';
+    $('driverContent').textContent =
+        'Fahrerwertung wird geladen ...';
+
+    try {
+
+        const data = await api(`${YEAR}/driverstandings`);
+
+        const list =
+            data.StandingsTable?.StandingsLists?.[0];
+
+        setSeason(data.StandingsTable);
+
+        if (!list?.DriverStandings?.length) {
+            throw new Error('Noch keine Wertungsdaten vorhanden.');
+        }
+
+        $('driverMeta').textContent =
+            `Stand nach Runde ${list.round || '—'} · ${list.season}`;
+
+        const rows = list.DriverStandings.map((s,i) => {
+
+            const d = s.Driver || {};
+
+            const team =
+                s.Constructors?.map(x => x.name).join(', ') || '—';
+
+            return `
+
+            <tr>
+
+                <td class="pos ${i===0?'first':''}">
+                    ${escapeHTML(s.position || i+1)}
+                </td>
+
+                <td>
+
+                    <div class="driver">
+                        ${escapeHTML(d.givenName)}
+                        ${escapeHTML(d.familyName)}
+
+                        <span style="color:#999">
+                            ${escapeHTML(d.code || '')}
+                        </span>
+                    </div>
+
+                    <div class="team">
+                        ${escapeHTML(team)}
+                    </div>
+
+                </td>
+
+                <td class="points">
+                    ${number(s.wins)}
+                    <span class="meta">Siege</span>
+                </td>
+
+                <td class="points">
+                    ${number(s.points)} P
+                </td>
+
+            </tr>
+
+            `;
+
+        }).join('');
+
+        $('driverContent').className = '';
+
+        $('driverContent').innerHTML = `
+
+            <div class="race-card">
+
+                <div class="table-wrap">
+
+                    <table class="standings-table">
+
+                        <thead>
+                            <tr>
+                                <th>Pos.</th>
+                                <th>Fahrer</th>
+                                <th>Siege</th>
+                                <th style="text-align:right">
+                                    Punkte
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        `;
+
+        setUpdated();
+
+    } catch(e) {
+
+        showError('driverContent', e);
+
+    }
+
+}
+
+
+// TEAM-WM LADEN
+
+async function loadTeams() {
+
+    $('teamContent').className = 'loading';
+    $('teamContent').textContent =
+        'Teamwertung wird geladen ...';
+
+    try {
+
+        const data = await api(
+            `${YEAR}/constructorstandings`
+        );
+
+        const list =
+            data.StandingsTable?.StandingsLists?.[0];
+
+        setSeason(data.StandingsTable);
+
+        if (!list?.ConstructorStandings?.length) {
+            throw new Error('Noch keine Wertungsdaten vorhanden.');
+        }
+
+        $('teamMeta').textContent =
+            `Stand nach Runde ${list.round || '—'} · ${list.season}`;
+
+        const max = Math.max(
+            ...list.ConstructorStandings.map(
+                s => Number(s.points) || 0
+            ),
+            1
+        );
+
+        const rows = list.ConstructorStandings.map((s,i) => {
+
+            const team = s.Constructor || {};
+
+            const width = Math.max(
+                2,
+                Math.round(
+                    (Number(s.points) || 0) / max * 100
+                )
+            );
+
+            return `
+
+            <tr>
+
+                <td class="pos ${i===0?'first':''}">
+                    ${escapeHTML(s.position || i+1)}
+                </td>
+
+                <td>
+
+                    <span class="teamline"></span>
+
+                    <span class="team-name">
+                        ${escapeHTML(team.name || '—')}
+                    </span>
+
+                    <div class="team">
+                        ${escapeHTML(team.nationality || '')}
+                    </div>
+
+                </td>
+
+                <td class="points">
+                    ${number(s.wins)}
+                    <span class="meta">Siege</span>
+                </td>
+
+                <td class="team-points">
+
+                    ${number(s.points)} P
+
+                    <div class="bar">
+                        <span style="width:${width}%"></span>
+                    </div>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        }).join('');
+
+        $('teamContent').className = '';
+
+        $('teamContent').innerHTML = `
+
+            <div class="race-card">
+
+                <div class="table-wrap">
+
+                    <table class="standings-table">
+
+                        <thead>
+                            <tr>
+                                <th>Pos.</th>
+                                <th>Team</th>
+                                <th>Siege</th>
+                                <th style="text-align:right">
+                                    Punkte
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        `;
+
+        setUpdated();
+
+    } catch(e) {
+
+        showError('teamContent', e);
+
+    }
+
+}
+
+
+// REITER WECHSELN
+
+document.querySelectorAll('.tab').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        document.querySelectorAll('.tab').forEach(b => {
+            b.classList.toggle('active', b === button);
+        });
+
+        document.querySelectorAll('.view').forEach(v => {
+            v.classList.toggle(
+                'active',
+                v.id === button.dataset.view
+            );
+        });
+
+    });
+
+});
+
+
+// AKTUALISIERUNGS-BUTTONS
+
+$('refreshResults').addEventListener(
+    'click', loadResults
+);
+
+$('refreshDrivers').addEventListener(
+    'click', loadDrivers
+);
+
+$('refreshTeams').addEventListener(
+    'click', loadTeams
+);
+
+
+// ALLE DATEN BEIM START LADEN
+
+loadResults();
+loadDrivers();
+loadTeams();
+
+</script>
+
+</body>
+</html>
