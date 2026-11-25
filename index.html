@@ -784,7 +784,7 @@ async function loadDashboard(force = false) {
           outcome.reason.message
         );
 
-        Nachricht anzeigen(
+        Nachricht Anzeichen(
           Wut.Behälter,
           "Daten konnten nicht geladen werden",
           Ergebnis.Grund.Nachricht
@@ -815,9 +815,9 @@ async function loadDashboard(force = false) {
   }
 }
 
-/* --------------------------
+/* -----------------------
    REGISTRARKARTEN
---------------------------- */
+---------------------------- */
 
 Dokument.querySelectorAll(".tab").fürJeden(Geschmack => {
   Geschmack.addEventListener("klicken", () => {
@@ -839,9 +839,9 @@ Dokument.querySelectorAll(".tab").fürJeden(Geschmack => {
   });
 });
 
-/* -------------------
+/* -----------------------
    AKTUALISIERUNG
--------------------------- */
+---------------------------- */
 
 el.Aktualisieren.addEventListener("klicken", () => {
   loadDashboard(Wahr);
@@ -853,9 +853,9 @@ Dokument.querySelectorAll("[Datenaktualisierung]").fürJeden(Geschmack => {
   });
 });
 
-/* -----------------
+/* -----------------------
    BEGINNEN
-------------------------- */
+---------------------------- */
 
 loadDashboard();
 
